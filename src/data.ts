@@ -2,10 +2,12 @@ export class dOption{
     public value: number;
     public text: string;
     public target: string;
+    public checked: boolean;
     constructor(text:string, name:string, value: number){
         this.value = value;
         this.text = text;
         this.target =name;
+        this.checked = false;
     }
 }
 

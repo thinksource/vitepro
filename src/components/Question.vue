@@ -3,7 +3,7 @@
 <h4>{{title}}</h4>
     <ul class="list-group">
       <li v-for="(opt, o_index) in options" :key="o_index" class="list-group-item">
-        <input type="radio" :name="name+o_index" :value="opt" v-model="ref_model" :id="opt.target"/>{{opt.text}}
+        <input type="radio" :name="name+o_index" :value="opt" v-model="ref_model" :id="opt.target" :checked="opt.checked"/>{{opt.text}}
 
       </li>
     </ul>
@@ -15,6 +15,7 @@
 
 import {watch, ref} from 'vue';
 
+import { dOption } from '../data';
 
 
 type Props={
