@@ -4,7 +4,7 @@
     <br/>
     <!-- <HelloWorld msg="Hello Vue 3.0 + Vite" /> -->
     <ul>
-      <li v-for="(question, q_index) in questions" :key="q_index" v-show="question.visible" :class="getClass(question)">
+      <li v-for="(question, q_index) in questions" :key="q_index" v-show="question.visible" :style="{ paddingLeft: `${question.level*2}rem` }">
         <Question :title="question.title" :options="question.options" :name="question.id" :visible="question.visible" @opUpdate="opHandle"/>
       </li>  
     </ul>
@@ -230,14 +230,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-.qlist0 {
-  padding-left: 0;
-}
-.qlist1 {
-  padding-left: 2rem;
-}
-.qlist2 {
-  padding-left: 4rem;
-}
-</style>
