@@ -4,10 +4,9 @@
     <br/>
     <!-- <HelloWorld msg="Hello Vue 3.0 + Vite" /> -->
     <ul>
-    <li v-for="(question, q_index) in questions" :key="q_index" v-show="question.visible">
+      <li v-for="(question, q_index) in questions" :key="q_index" v-show="question.visible" :class="getClass(question)">
         <Question :title="question.title" :options="question.options" :name="question.id" :visible="question.visible" @opUpdate="opHandle"/>
-
-      </li> 
+      </li>  
     </ul>
     <h4>
     Score: {{sum_score}}
@@ -21,6 +20,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import Question from './components/Question.vue'
 import {dOption, dQuestion} from './data'
 import axios from 'axios';
+
 
 function makeid(length:number) {
    var result           = '';
@@ -78,7 +78,8 @@ export default {
       public answer: number=0;
       public id:string;
       public parent: string | undefined;
-      constructor(node: ChildNode, visible:boolean, parent: string | undefined = undefined){
+      public level: number;
+      constructor(node: ChildNode, level:number = 0, parent: string | undefined = undefined){
         this.title = getText(seletChildbyName(node, 'title'), 0);
         this.score = parseInt(getText(seletChildbyName(node, 'score'),0));
         if(!this.score){
@@ -91,12 +92,16 @@ export default {
             this.score = DEFAULT_SCORE
           }
         }
-        this.visible = visible; 
         this.parent = parent;
-        if(parent === undefined) 
+        if(parent === undefined) {
           this.id = makeid(4)+qData_index;
-        else
+          this.level = 0;
+          this.visible = true;
+        }else{
           this.id = parent;
+          this.level = level;
+          this.visible = false;
+        }
         let answers = seletChildbyName(node, 'answers')[0];
         let ops = seletChildbyName(answers, 'answer');
         qData_index+=1;
@@ -108,7 +113,7 @@ export default {
         }
       }
     }
-    const addSubQuestion = (qnode: ChildNode, parent:string)=>{
+    const addSubQuestion = (qnode: ChildNode, parent:string, level: number)=>{
       let q_prx = getText(seletChildbyName(qnode, 'title'), 0);
       let t_ans= seletChildbyName(qnode, 'answers')[0];
       let answers = seletChildbyName(t_ans, 'answer');
@@ -119,9 +124,9 @@ export default {
         console.log(questions);
         let qlist = seletChildbyName(questions[0], 'question')
         for(let j=0; j < qlist.length; j++){
-          let tmp = new qData(qlist[j], false, parent+i_an+j)
+          let tmp = new qData(qlist[j], level+1, parent+i_an+j)
           state.questions.push(tmp)
-          addSubQuestion(qlist[j], tmp.id)
+          addSubQuestion(qlist[j], tmp.id, level+1)
         }
       }
     }
@@ -194,6 +199,10 @@ export default {
       }
     }
 
+    const getClass = ( qd:qData)=>{
+      return 'qlist'+qd.level
+    }
+
     onBeforeMount(async ()=>{
     const myreq = await axios.get('./data/example.xml', {headers:{"Content-Type": "application/xml; charset=utf-8"}});
     if(myreq.status==200){
@@ -208,17 +217,27 @@ export default {
     state.title = getText(seletChildbyName(root, 'name'), 0);
 
     for(let i of qlist){
-      let tmp = new qData(i, true)
+      let tmp = new qData(i)
       state.questions.push(tmp)
-      addSubQuestion(i, tmp.id)
+      addSubQuestion(i, tmp.id, 0)
     }
     console.log(state.questions);
     
     }
     });
 
-    return {...toRefs(state), opHandle};
+    return {...toRefs(state), opHandle, getClass};
   }
 }
 </script>
-
+<style scoped>
+.qlist0 {
+  padding-left: 0;
+}
+.qlist1 {
+  padding-left: 2rem;
+}
+.qlist2 {
+  padding-left: 4rem;
+}
+</style>

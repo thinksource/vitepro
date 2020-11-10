@@ -3,7 +3,7 @@
    <name>CNS questions</name>
    <questions>
       <question>
-         <title>Have you ever lost movement on one side of your body (affecting arms,legs or face)</title>
+         <title>Have you ever lost movement on one side of your body (affecting arms,legs or face)?</title>
          <score>100</score>
          <answers>
             <answer>
@@ -12,6 +12,34 @@
                <sub_questions>
                   <question>
                      <title>Was this preceded by a headache, nausea or vomiting?</title>
+                     <answers>
+                        <answer>
+                           <value>Yes</value>
+                           <factor>1.5</factor>
+                           <sub_questions>
+                              <question>
+                                 <title>Does anyone else in your family have this problem</title>
+                                 <answers>
+                                    <answer>
+                                       <factor>1.5</factor>
+                                       <value>Yes</value>
+                                    </answer>
+                                    <answer>
+                                       <factor>1</factor>
+                                       <value>No</value>
+                                    </answer>
+                                 </answers>
+                              </question>
+                           </sub_questions>
+                        </answer>
+                        <answer>
+                           <factor>1</factor>
+                           <value>No</value>
+                        </answer>
+                     </answers>
+                  </question>
+                  <question>
+                     <title>Was this preceded by seizure?</title>
                      <answers>
                         <answer>
                            <value>Yes</value>
@@ -101,20 +129,6 @@
                      </answers>
                   </question>
                </sub_questions>
-            </answer>
-            <answer>
-               <factor>0</factor>
-               <value>No</value>
-            </answer>
-         </answers>
-      </question>
-      <question>
-         <title>Example question</title>
-         <score>40</score>
-         <answers>
-            <answer>
-               <factor>1</factor>
-               <value>Yes</value>
             </answer>
             <answer>
                <factor>0</factor>
