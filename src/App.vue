@@ -117,11 +117,9 @@ export default {
       let q_prx = getText(seletChildbyName(qnode, 'title'), 0);
       let t_ans= seletChildbyName(qnode, 'answers')[0];
       let answers = seletChildbyName(t_ans, 'answer');
-      console.log(answers);
       for(let i_an = 0; i_an < answers.length; i_an++){
         // let a_prx = getText(seletChildbyName(answers[i_an], 'value'),0);
         let questions = seletChildbyName(answers[i_an], 'sub_questions');
-        console.log(questions);
         let qlist = seletChildbyName(questions[0], 'question')
         for(let j=0; j < qlist.length; j++){
           let tmp = new qData(qlist[j], level+1, parent+i_an+j)

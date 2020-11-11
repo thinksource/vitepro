@@ -32,13 +32,14 @@ export default {
   context: {
     update: (s:string)=>{return s}
   },
-  props: {
-    visible: Boolean,
-    title: String,
-    options: [],
-    name: String,
-    // model: Number,
-  },
+  props: ['visible', 'title', 'options', 'name'],
+  // {
+  //   visible: Boolean,
+  //   title: String,
+  //   options: [],
+  //   name: String,
+  //   // model: Number,
+  // },
   // methods:{
   //   update(event: Event){
   //     console.log(event.target)
