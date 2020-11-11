@@ -197,9 +197,6 @@ export default {
       }
     }
 
-    const getClass = ( qd:qData)=>{
-      return 'qlist'+qd.level
-    }
 
     onBeforeMount(async ()=>{
     const myreq = await axios.get('./data/example.xml', {headers:{"Content-Type": "application/xml; charset=utf-8"}});
@@ -224,7 +221,7 @@ export default {
     }
     });
 
-    return {...toRefs(state), opHandle, getClass};
+    return {...toRefs(state), opHandle};
   }
 }
 </script>
